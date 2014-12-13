@@ -1,6 +1,8 @@
 
 require 'weather'
 
+class Sky; include Weather; end
+
 describe Sky do 
 	
 	let(:sky) {Sky.new}
@@ -14,5 +16,7 @@ describe Sky do
 			sky.weather_generator(0)
 			expect(sky).to be_stormy
 		end
+
+
 
 end

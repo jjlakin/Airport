@@ -1,4 +1,4 @@
-module Weather
+class Sky
 	
 	DEFAULT_WEATHER = 0.8
 
