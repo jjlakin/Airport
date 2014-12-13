@@ -19,6 +19,10 @@ describe Airport do
 		6.times {airport.accept(plane)}
   end
 
+	def stormy_weather
+		airport.weather_generator(0)
+	end
+
   context 'taking off and landing' do
 
   	it 'should have a planes storage' do
@@ -67,11 +71,25 @@ describe Airport do
 	
     context 'weather conditions' do
 
+    	it 'should be able to have ' do
+
+	    	stormy_weather
+	      expect(airport).to be_stormy
+	    
+	    end
+
       it 'a plane cannot take off when there is a storm brewing' do
+				
+				airport.accept(plane)
+				stormy_weather
+				expect(lambda {airport.launch(plane) }).to raise_error(RuntimeError, 'there is a storm brewing, please don\'t leave')
+				
 
       end
 
       it 'a plane cannot land in the middle of a storm' do
+
+
 
       end
     end
@@ -89,7 +107,7 @@ describe Plane do
   let(:plane) { Plane.new }
 
   it 'has a flying status when created' do
-
+	
   end
 
   it 'has a flying status when in the air' do
