@@ -12,29 +12,48 @@ describe Airport do
 
   let(:airport) { Airport.new }
   let(:plane) { double( :plane, :land! => false)}
+  let(:sky) { double( :sky, :stormy => false,  )}
+  let(:stormy_sky) { double( :stormy_sky, :stormy => true,  )}
+
+  def fill_airport
+		6.times {airport.accept(plane)}
+  end
 
   context 'taking off and landing' do
 
-  	it 'should have a hanger storage' do
+  	it 'should have a planes storage' do
   		
   	end
 
     it 'a plane can land' do
-			expect(airport.hanger.count).to eq(0)
+			expect(airport.planes.count).to eq(0)
 			airport.accept(plane)
-			expect(airport.hanger.count).to eq(1)
+			expect(airport.planes.count).to eq(1)
     end
 
     it 'a plane can take off' do
 			airport.accept(plane)
 			airport.launch(plane)
-			expect(airport.hanger.count).to eq(0)
+			expect(airport.planes.count).to eq(0)
     end
   end
 
   context 'traffic control' do
 
+  	it 'knows when it is full' do
+			
+			fill_airport
+			expect(airport.planes_count).to eq(6)
+  		expect(airport.full).to eq(true)
+
+  	end
+
     it 'a plane cannot land if the airport is full' do
+			
+			fill_airport
+			expect(lambda{airport.accept(plane) }).to raise_error(RuntimeError, 'the plane storage is full')
+			
+			
 			
     end
 
@@ -45,7 +64,7 @@ describe Airport do
     # This will require stubbing to stop the random return of the weather.
     # If the airport has a weather condition of stormy,
     # the plane can not land, and must not be in the airport
-
+	
     context 'weather conditions' do
 
       it 'a plane cannot take off when there is a storm brewing' do
