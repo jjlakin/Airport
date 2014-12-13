@@ -8,7 +8,7 @@ require_relative 'weather'
 
 		def initialize
 			@planes ||= []
-
+			@
 		end
 
 		def planes
@@ -37,7 +37,7 @@ require_relative 'weather'
 			end
 
 			planes << plane
-
+			planes.each { |plane| plane.land! }
 		end
 
 		def launch (plane = nil)
@@ -46,8 +46,9 @@ require_relative 'weather'
 				raise 'there is a storm brewing, please don\'t leave'
 			end
 
+			free_plane=planes.delete(plane)
+			free_plane
 
-			planes.delete(plane)
 		end
 
 	end
