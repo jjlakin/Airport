@@ -8,7 +8,16 @@ require_relative 'weather'
 
 		def initialize
 			@planes ||= []
-			@
+			@airspace ||= []
+			@landing_information = { "landing_confirmation" => 0 , "flight_log" => 0}
+		end
+
+		def landing_information(input = nil)
+			input == nil ? @landing_information : @landing_information[input]
+		end
+
+		def airspace
+			@airspace
 		end
 
 		def planes
@@ -28,6 +37,10 @@ require_relative 'weather'
 			planes_count == 6
 		end
 
+		def empty
+			planes_count == 0
+		end
+
 		def accept (plane)
 			
 			if full 
@@ -35,19 +48,104 @@ require_relative 'weather'
 			elsif self.stormy?
 				raise 'it\'s a tad windy'
 			end
-
+			
+			plane.land!
 			planes << plane
-			planes.each { |plane| plane.land! }
+			# planes.each { |plane| plane.land! }
+
 		end
 
-		def launch (plane = nil)
+		def launch (plane = Plane)
 			
 			if self.stormy? 
 				raise 'there is a storm brewing, please don\'t leave'
 			end
 
-			free_plane=planes.delete(plane)
-			free_plane
+			plane = planes.pop
+			plane.flying!
+			
+
+		end
+
+		def record(title, value)
+
+			landing_information[title] = value
+			
+		end
+
+		def log_check
+			log_check = planes.each( |plane| plane.flying )
+			
+		end
+
+		def circle
+			
+		end
+
+		def weather_status
+
+			stormy? ?	"stormy" : "clears skies"
+
+		end
+
+		def  fill_airport_with_weather(plane)
+
+			# input = gets.chomp
+				
+			self.weather_generator
+			puts stormy?
+				
+			while self.planes_count < 6
+
+				self.weather_generator
+				puts weather_status
+					
+					
+				if stormy? == false
+					self.accept(plane)
+					puts "confirmation"
+				elsif stormy? == true
+					puts 'not this time'
+				end
+ 
+			end
+
+			plane_count = planes.count
+			@landing_information["landing_confirmation"] = plane_count
+			@landing_information["flight_log"] = plane_count
+			
+
+		end
+
+		def empty_airport_with_weather
+
+			while self.planes_count > 0
+					
+				self.weather_generator
+				
+
+				if stormy? == false
+					self.launch
+					puts "confirmation"
+				elsif stormy? == true
+					puts 'not this time'
+				end
+
+			end
+
+			# input = "y"
+			# if input = "y"
+				
+			# 	until full
+			# 		if self.weather_generator == stormy?
+			# 			input = gets.chomp
+			# 		else
+			# 			self.accept(plane)
+			# 			puts "plane landed"
+			# 		end
+			# 	end
+			# 	record( "landing_confirmation", planes_count)
+			
 
 		end
 
