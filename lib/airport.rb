@@ -133,20 +133,6 @@ require_relative 'weather'
 
 			end
 
-			# input = "y"
-			# if input = "y"
-				
-			# 	until full
-			# 		if self.weather_generator == stormy?
-			# 			input = gets.chomp
-			# 		else
-			# 			self.accept(plane)
-			# 			puts "plane landed"
-			# 		end
-			# 	end
-			# 	record( "landing_confirmation", planes_count)
-			
-
 		end
 
 	end
